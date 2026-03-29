@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edu AI Pro</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Rajdhani:wght@500;700&display=swap');
+
+        body {
+            margin: 0;
+            font-family: 'Inter', Arial, sans-serif;
+            background: #918a7f;
+            color: rgb(77, 74, 74);
+            transition: background 0.3s ease, color 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px) rotateX(10deg);
+            animation: pageLoad 0.8s ease-out forwards, cinematicBackground 25s ease-in-out infinite;
+            perspective: 1000px;
+            overflow-x: hidden;
+        }
+
+        @keyframes cinematicBackground {
+
+            0%,
+            100% {
+                background: radial-gradient(circle at 50% 20%, rgba(145, 138, 127, 0.8), #3c3346 60%);
+                color: #4d4a4a;
+            }
+
+            25% {
+                background: radial-gradient(circle at 30% 10%, rgba(65, 89, 119, 0.85), #23233e 60%);
+                color: #e7e5e5;
+            }
+
+            50% {
+                background: radial-gradient(circle at 70% 30%, rgba(85, 69, 110, 0.85), #191836 60%);
+                color: #f7f4f4;
+            }
+
+            75% {
+                background: radial-gradient(circle at 40% 80%, rgba(124, 109, 142, 0.85), #2c2a46 60%);
+                color: #ece8e8;
+            }
+        }
+
+        .message {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 10px;
+            max-width: 70%;
+            animation: messageSlideIn 0.3s ease-out, cinematicGlow 5s ease-in-out infinite alternate, geminiSpark 8s ease-in-out infinite;
+            opacity: 0;
+            transform: translateY(20px) rotateX(-90deg) scale(0.8);
+            transform-origin: top center;
+            animation-fill-mode: forwards;
+            backface-visibility: hidden;
+            font-family: 'Rajdhani', 'Inter', Arial, sans-serif;
+        }
+
+        @keyframes geminiSpark {
+
+            0%,
+            100% {
+                text-shadow: 0 0 8px rgba(175, 225, 255, 0.2), 0 0 20px rgba(84, 186, 255, 0.18);
+            }
+
+            50% {
+                text-shadow: 0 0 16px rgba(173, 236, 255, 0.4), 0 0 35px rgba(25, 146, 215, 0.35);
+            }
+        }
+
+
+        @keyframes cinematicGlow {
+            0% {
+                box-shadow: 0 0 15px rgba(16, 163, 127, 0.2), 0 0 30px rgba(68, 70, 84, 0.2);
+            }
+
+            50% {
+                box-shadow: 0 0 35px rgba(16, 163, 127, 0.6), 0 0 60px rgba(68, 70, 84, 0.45);
+            }
+
+            100% {
+                box-shadow: 0 0 20px rgba(16, 163, 127, 0.3), 0 0 40px rgba(68, 70, 84, 0.3);
+            }
+        }
+
+        .light {
+            background: #9ea562;
+            color: black;
+        }
+
+        .apple {
+            background: #616199;
+            color: #445b5c;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        @keyframes pageLoad {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-box {
+            height: 70vh;
+            overflow-y: auto;
+            padding: 10px;
+            scroll-behavior: smooth;
+            animation: cinematicChatPulse 3s ease-in-out infinite;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            border-radius: 12px;
+        }
+
+        @keyframes cinematicChatPulse {
+            0% {
+                box-shadow: 0 0 12px rgba(255, 255, 255, 0.06);
+                transform: translateY(0);
+            }
+
+            50% {
+                box-shadow: 0 0 25px rgba(255, 255, 255, 0.12);
+                transform: translateY(-2px);
+            }
+
+            100% {
+                box-shadow: 0 0 12px rgba(255, 255, 255, 0.06);
+                transform: translateY(0);
+            }
+        }
+
+        .message {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 10px;
+            max-width: 70%;
+            animation: messageSlideIn 0.3s ease-out;
+            opacity: 0;
+            transform: translateY(20px) rotateX(-90deg) scale(0.8);
+            transform-origin: top center;
+            animation-fill-mode: forwards;
+            backface-visibility: hidden;
+        }
+
+        .message.user {
+            background: #10a37f;
+            margin-left: auto;
+            animation-delay: 0s;
+        }
+
+        .message.bot {
+            background: #444654;
+            animation-delay: 0.1s;
+        }
+
+        .apple .message.user {
+            background: #007aff;
+            margin-left: auto;
+            border-radius: 18px 18px 4px 18px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .apple .message.bot {
+            background: white;
+            border: 1px solid #e5e5e7;
+            border-radius: 18px 18px 18px 4px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        @keyframes messageSlideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0) rotateX(0deg) scale(1);
+            }
+        }
+
+        .input-area {
+            display: flex;
+            padding: 10px;
+            animation: slideUp 0.5s ease-out;
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+        }
+
+        .input-area:hover {
+            transform: rotateX(-1deg) translateZ(5px);
+        }
+
+        .apple .input-area {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            margin: 10px;
+            padding: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        button {
+            margin: 5px;
+            padding: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .apple button {
+            background: #007aff;
+            color: white;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: 500;
+            box-shadow: 0 1px 3px rgba(0, 122, 255, 0.3);
+        }
+
+        .apple button:hover {
+            background: #0056cc;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 6px rgba(0, 122, 255, 0.4);
+        }
+
+        button:hover {
+            transform: translateY(-2px) rotateX(-5deg) scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        button:active {
+            transform: translateY(0) rotateX(0deg) scale(0.98);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        button:hover::before {
+            left: 100%;
+        }
+
+        /* Input styles */
+        input:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .apple input {
+            border: 1px solid #d1d1d6;
+            border-radius: 10px;
+            background: white;
+            color: #1c1c1e;
+            padding: 12px 16px;
+            font-size: 16px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .apple input:focus {
+            outline: none;
+            border-color: #007aff;
+            box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.2);
+        }
+
+        .gpt-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            margin: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            animation: fadeIn 0.8s ease-out;
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+        }
+
+        .gpt-controls:hover {
+            transform: rotateX(2deg) rotateY(1deg) translateZ(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .apple .gpt-controls {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid #e5e5e7;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .gpt-controls label {
+            color: white;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .apple .gpt-controls label {
+            color: #1c1c1e;
+            font-weight: 500;
+        }
+
+        .gpt-controls select,
+        .gpt-controls input {
+            border: 1px solid #555;
+            border-radius: 5px;
+            background: #222;
+            color: white;
+            padding: 3px 8px;
+            transition: border-color 0.3s ease;
+        }
+
+        .apple .gpt-controls select,
+        .apple .gpt-controls input {
+            border: 1px solid #d1d1d6;
+            border-radius: 8px;
+            background: white;
+            color: #1c1c1e;
+            padding: 6px 12px;
+            font-size: 14px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .gpt-controls select:focus,
+        .gpt-controls input:focus {
+            outline: none;
+            border-color: #10a37f;
+            box-shadow: 0 0 5px rgba(16, 163, 127, 0.3);
+        }
+
+        .subjects {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            padding: 10px;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        .subjects button {
+            background: #10a37f;
+            color: white;
+            animation: bounceIn 0.5s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .apple .subjects button {
+            background: #007aff;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: 0 1px 3px rgba(0, 122, 255, 0.3);
+        }
+
+        .subjects button:hover {
+            transform: translateY(-5px) rotateX(5deg) scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3) rotateY(-180deg) translateY(50px);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.05) rotateY(-90deg) translateY(-10px);
+            }
+
+            70% {
+                transform: scale(0.9) rotateY(0deg) translateY(5px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1) rotateY(0deg) translateY(0);
+            }
+        }
+
+        .timer {
+            text-align: center;
+            margin: 10px;
+            animation: pulse 2s infinite;
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+        }
+
+        .timer:hover {
+            transform: rotateY(5deg) rotateX(-2deg) scale(1.05);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        textarea:hover {
+            transform: translateY(-3px) rotateX(2deg) scale(1.01);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background: #222;
+            color: white;
+            padding: 10px;
+            transition: border-color 0.3s ease;
+            resize: vertical;
+        }
+
+        .apple textarea {
+            border: 1px solid #d1d1d6;
+            border-radius: 8px;
+            background: white;
+            color: #1c1c1e;
+            padding: 12px;
+            font-size: 16px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .apple textarea:focus {
+            outline: none;
+            border-color: #007aff;
+            box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.2);
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #10a37f;
+            box-shadow: 0 0 5px rgba(16, 163, 127, 0.3);
+        }
+
+        /* Typing indicator animation */
+        .typing-indicator {
+            display: inline-block;
+            animation: typing 1.5s infinite;
+        }
+
+        @keyframes typing {
+
+            0%,
+            60%,
+            100% {
+                transform: translateY(0);
+            }
+
+            30% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Particle background effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 226, 0.1) 0%, transparent 50%);
+            animation: particleFloat 20s ease-in-out infinite;
+            transform-style: preserve-3d;
+            z-index: -1;
+        }
+
+        .apple::before {
+            background: radial-gradient(circle at 25% 75%, rgba(0, 122, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 75% 25%, rgba(52, 199, 89, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(255, 59, 48, 0.03) 0%, transparent 50%);
+        }
+
+        @keyframes particleFloat {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg) rotateX(0deg) scale(1);
+                opacity: 0.5;
+            }
+
+            25% {
+                transform: translateY(-30px) rotate(90deg) rotateX(10deg) scale(1.1);
+                opacity: 0.7;
+            }
+
+            50% {
+                transform: translateY(-60px) rotate(180deg) rotateX(0deg) scale(0.9);
+                opacity: 0.3;
+            }
+
+            75% {
+                transform: translateY(-30px) rotate(270deg) rotateX(-10deg) scale(1.05);
+                opacity: 0.6;
+            }
+        }
+
+        /* Loading spinner for buttons */
+        .loading {
+            position: relative;
+            color: transparent;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            top: 50%;
+            left: 50%;
+            margin-left: -8px;
+            margin-top: -8px;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotateY(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2 style="text-align:center">🎓 Edu AI Pro (ChatGPT Style)</h2>
+
+    <div class="gpt-controls">
+        <label>System Prompt:
+            <input id="systemPrompt" placeholder="You are a friendly tutor..." style="width:70%;" />
+        </label>
+        <label>Model:
+            <select id="modelSelect">
+                <option value="gpt-3.5">GPT-3.5</option>
+                <option value="gpt-4">GPT-4</option>
+                <option value="gemini">Gemini</option>
+                <option value="gemini-pro">Gemini Pro</option>
+            </select>
+        </label>
+        <label>Temperature:
+            <input id="temperature" type="range" min="0" max="1" step="0.1" value="0.7" />
+            <span id="temperatureValue">0.7</span>
+        </label>
+        <label>Max Tokens:
+            <input id="maxTokens" type="number" min="50" max="1000" value="150" />
+        </label>
+        <label>Top-p:
+            <input id="topP" type="range" min="0" max="1" step="0.05" value="1" />
+            <span id="topPValue">1.00</span>
+        </label>
+        <button onclick="regenerate()">Regenerate</button>
+        <button onclick="exportChat()">Export Chat</button>
+    </div>
+
+    <div class="subjects">
+        <button onclick="quickAsk('math help')">Math</button>
+        <button onclick="quickAsk('physics')">Physics</button>
+        <button onclick="quickAsk('chemistry')">Chemistry</button>
+        <button onclick="quickAsk('biology')">Biology</button>
+        <button onclick="quickAsk('programming')">Coding</button>
+        <button onclick="quickAsk('history')">History</button>
+        <button onclick="quickAsk('gemini features')">Gemini Features</button>
+    </div>
+
+    <div class="chat-box" id="chatBox"></div>
+
+    <div class="input-area">
+        <input id="input" placeholder="Ask something...">
+        <button onclick="send()">Send</button>
+        <button onclick="clearChat()">Clear</button>
+    </div>
+
+    <div class="timer">
+        ⏱ Study Timer: <span id="time">25:00</span>
+        <button onclick="startTimer()">Start</button>
+        <button onclick="resetTimer()">Reset</button>
+    </div>
+
+    <h3>📝 Notes</h3>
+    <textarea id="notes"></textarea><br>
+    <button onclick="saveNotes()">Save</button>
+    <button onclick="downloadNotes()">Download</button>
+
+    <button onclick="toggleTheme()">🌙 Dark Mode</button>
+
+    <script>
+        const chatBox = document.getElementById("chatBox");
+        const input = document.getElementById("input");
+        const systemPromptInput = document.getElementById("systemPrompt");
+        const modelSelect = document.getElementById("modelSelect");
+        const temperatureInput = document.getElementById("temperature");
+        const temperatureValue = document.getElementById("temperatureValue");
+        const maxTokensInput = document.getElementById("maxTokens");
+        const topPInput = document.getElementById("topP");
+        const topPValue = document.getElementById("topPValue");
+
+        let history = JSON.parse(localStorage.getItem("chat")) || [];
+        let lastUserMessage = "";
+        let lastBotMessage = "";
+
+        // Load history efficiently (limit to last 50 messages)
+        function loadHistory() {
+            chatBox.innerHTML = "";
+            // Only load last 50 messages to prevent performance issues
+            const recentHistory = history.slice(-50);
+            recentHistory.forEach(m => render(m.text, m.type));
+        }
+        loadHistory();
+
+        // Control sync
+        temperatureInput.addEventListener("input", () => {
+            temperatureValue.textContent = parseFloat(temperatureInput.value).toFixed(1);
+        });
+        topPInput.addEventListener("input", () => {
+            topPValue.textContent = parseFloat(topPInput.value).toFixed(2);
+        });
+
+        // Send message
+        function send() {
+            let text = input.value.trim();
+            if (!text) return;
+
+            // Prevent rapid clicking
+            const sendBtn = document.querySelector('button[onclick="send()"]');
+            if (sendBtn) {
+                sendBtn.disabled = true;
+                sendBtn.classList.add('loading');
+                sendBtn.textContent = '';
+            }
+
+            render(text, "user");
+            history.push({ text, type: "user" });
+
+            // Limit history to last 100 messages to prevent performance issues
+            if (history.length > 100) {
+                history = history.slice(-100);
+            }
+
+            input.value = "";
+            input.focus();
+
+            lastUserMessage = text;
+
+            // Show typing indicator
+            const typingDiv = document.createElement("div");
+            typingDiv.className = "message bot typing-indicator";
+            typingDiv.textContent = "🤖 AI is thinking...";
+            chatBox.appendChild(typingDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            setTimeout(() => {
+                // Remove typing indicator
+                if (typingDiv.parentNode) {
+                    typingDiv.remove();
+                }
+
+                let res = reply(text);
+                render(res, "bot");
+                history.push({ text: res, type: "bot" });
+                lastBotMessage = res;
+
+                // Limit history again after bot response
+                if (history.length > 100) {
+                    history = history.slice(-100);
+                }
+
+                localStorage.setItem("chat", JSON.stringify(history));
+
+                // Re-enable button
+                if (sendBtn) {
+                    sendBtn.disabled = false;
+                    sendBtn.classList.remove('loading');
+                    sendBtn.textContent = 'Send';
+                }
+            }, 400);
+        }
+
+        function regenerate() {
+            if (!lastUserMessage) {
+                render("⚠️ No question to regenerate. Ask something first.", "bot");
+                return;
+            }
+
+            render("Regenerating response...", "bot");
+            setTimeout(() => {
+                let res = reply(lastUserMessage, true);
+                // Replace last temporary line with final
+                const botMsgs = Array.from(chatBox.getElementsByClassName("message bot"));
+                if (botMsgs.length > 0) {
+                    botMsgs[botMsgs.length - 1].textContent = res;
+                } else {
+                    render(res, "bot");
+                }
+                lastBotMessage = res;
+
+                history.push({ text: res, type: "bot" });
+                if (history.length > 100) history = history.slice(-100);
+                localStorage.setItem("chat", JSON.stringify(history));
+            }, 400);
+        }
+
+        function exportChat() {
+            const data = history.map(c => `[${c.type}] ${c.text}`).join("\n");
+            const blob = new Blob([data], { type: 'text/plain' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'chat_history.txt';
+            a.click();
+        }
+
+        // Render message (optimized)
+        function render(text, type) {
+            let div = document.createElement("div");
+            div.className = "message " + type;
+            div.textContent = text;
+            chatBox.appendChild(div);
+
+            // Use requestAnimationFrame for smooth scrolling
+            requestAnimationFrame(() => {
+                chatBox.scrollTop = chatBox.scrollHeight;
+            });
+        }
+
+        // Enter key support
+        input.addEventListener("keydown", e => {
+            if (e.key === "Enter") send();
+        });
+
+        // Quick buttons
+        function quickAsk(text) {
+            input.value = text;
+            send();
+        }
+
+        // Safe Math (enhanced with more functions)
+        function safeMath(exp) {
+            try {
+                // Only allow safe characters
+                if (!/^[0-9+\-*/().sqrtlogpiew\s]+$/.test(exp)) return null;
+
+                // Replace common math functions with safe versions
+                exp = exp.replace(/sqrt/g, 'Math.sqrt');
+                exp = exp.replace(/log/g, 'Math.log');
+                exp = exp.replace(/pi/g, 'Math.PI');
+                exp = exp.replace(/e/g, 'Math.E');
+
+                // Evaluate safely
+                return Function('"use strict"; return (' + exp + ')')();
+            } catch {
+                return null;
+            }
+        }
+
+        // Reply logic - Enhanced ChatGPT-style responses
+        function reply(text, isRegenerate = false) {
+            const systemPrompt = (systemPromptInput.value || "You are a helpful tutor who gives detailed, structured answers.").trim();
+            const model = modelSelect.value;
+            const temperature = parseFloat(temperatureInput.value);
+            const maxTokens = parseInt(maxTokensInput.value, 10);
+            const topP = parseFloat(topPInput.value);
+
+            text = text.toLowerCase().trim();
+
+            // If user asked to regenerate, include note for context
+            if (isRegenerate) {
+                text = "regenerate: " + text;
+            }
+
+            // Safe Math calculations
+            let math = text.replace(/[^0-9+\-*/().sqrtlogpiew\s]/g, "");
+            let result = safeMath(math);
+            if (result !== null && math !== "" && math.length > 1) {
+                return `🔢 (${model}) Math result with temperature ${temperature.toFixed(1)}: ${result}`;
+            }
+
+            // Model/tag derived fallback prefix
+            let baseResponse = `(${model} | T=${temperature.toFixed(1)} | top_p=${topP.toFixed(2)} | max_tokens=${maxTokens})`;
+
+            // Subject-specific detailed responses
+            if (text.includes("math") || text.includes("mathematics")) {
+                if (text.includes("algebra")) return `${baseResponse} \n📐 Algebra: Study of mathematical symbols and rules for manipulating them. Key topics: equations, inequalities, functions, polynomials.`;
+                if (text.includes("geometry")) return `${baseResponse} \n📏 Geometry: Study of shapes, sizes, and properties of space. Includes points, lines, angles, triangles, circles, and 3D shapes.`;
+                if (text.includes("calculus")) return `${baseResponse} \n∫ Calculus: Study of change and motion. Differential calculus (rates of change) and integral calculus (accumulation).`;
+                if (text.includes("help") || text.includes("study")) return `${baseResponse} \n🧮 Math Study Tips: 1) Practice daily, 2) Understand concepts before memorizing, 3) Use visual aids, 4) Work through examples step-by-step.`;
+                return `${baseResponse} \n🧮 Math covers: Algebra, Geometry, Trigonometry, Calculus, Statistics. What specific math topic do you need help with?`;
+            }
+
+
+
+            if (text.includes("physics")) {
+                if (text.includes("force") || text.includes("motion")) return "🏃 Physics - Motion & Forces: Newton's Laws: 1) Inertia, 2) F=ma, 3) Action-Reaction. Study kinematics, dynamics, and energy conservation.";
+                if (text.includes("energy")) return "⚡ Energy: Capacity to do work. Types: Kinetic, Potential, Thermal, Electrical, Chemical. Law of Conservation of Energy.";
+                if (text.includes("electricity")) return "⚡ Electricity: Flow of electric charge. Ohm's Law: V = IR. Study circuits, current, voltage, resistance.";
+                if (text.includes("light") || text.includes("optics")) return "💡 Optics: Study of light. Reflection, refraction, lenses, mirrors. Speed of light: 299,792,458 m/s.";
+                return "⚛️ Physics: Mechanics, Thermodynamics, Electricity, Magnetism, Optics, Modern Physics. What aspect interests you?";
+            }
+
+            if (text.includes("chemistry")) {
+                if (text.includes("atom")) return "⚛️ Atoms: Basic building blocks. Protons (+), Neutrons (neutral), Electrons (-). Atomic number = protons. Mass number = protons + neutrons.";
+                if (text.includes("periodic")) return "📊 Periodic Table: Elements arranged by atomic number. Groups = vertical columns, Periods = horizontal rows. Metals, nonmetals, metalloids.";
+                if (text.includes("reaction")) return "🧪 Chemical Reactions: Atoms rearrange to form new substances. Types: Synthesis, Decomposition, Combustion, Acid-Base.";
+                if (text.includes("acid") || text.includes("base")) return "🧪 Acids & Bases: Acids donate H+, Bases accept H+. pH scale: 0-14. Neutral = 7.";
+                return "⚗️ Chemistry: Organic, Inorganic, Physical, Analytical. Study atoms, molecules, reactions, and chemical properties.";
+            }
+
+            if (text.includes("biology")) {
+                if (text.includes("cell")) return "🦠 Cells: Basic unit of life. Prokaryotic (bacteria) vs Eukaryotic (plants/animals). Organelles: nucleus, mitochondria, ribosomes.";
+                if (text.includes("dna") || text.includes("genetic")) return "🧬 DNA: Genetic material. Double helix structure. Contains genes that code for proteins. Replication, transcription, translation.";
+                if (text.includes("evolution")) return "🦎 Evolution: Change in species over time. Natural selection, adaptation, speciation. Evidence: fossils, DNA, homologous structures.";
+                if (text.includes("photosynthesis")) return "🌱 Photosynthesis: Plants convert light energy to chemical energy. 6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂. Occurs in chloroplasts.";
+                return "🧬 Biology: Cells, Genetics, Evolution, Ecology, Physiology. Study life at all levels from molecules to ecosystems.";
+            }
+
+            if (text.includes("programming") || text.includes("coding") || text.includes("code")) {
+                if (text.includes("python")) return "🐍 Python: Versatile language. Great for beginners. Uses indentation. Popular for data science, web development, automation.";
+                if (text.includes("javascript") || text.includes("js")) return "🌐 JavaScript: Web language. Runs in browsers. Used for interactive websites, Node.js for servers. Key: variables, functions, DOM manipulation.";
+                if (text.includes("html")) return "🌐 HTML: Structure of web pages. Tags like <div>, <p>, <h1>. Semantic HTML for accessibility.";
+                if (text.includes("css")) return "🎨 CSS: Styles web pages. Colors, layouts, animations. Flexbox, Grid for modern layouts.";
+                if (text.includes("java")) return "☕ Java: Object-oriented. Platform independent. Used for Android apps, enterprise software.";
+                return "💻 Programming: Learn Python (beginners), JavaScript (web), Java (apps), C++ (performance). Start with basics: variables, loops, functions.";
+            }
+
+            // Gemini-style assistant enhancements
+            if (text.includes("gemini")) {
+                if (text.includes("pro")) {
+                    return "🤖 Gemini Pro: Advanced compositional reasoning, multimodal understanding, and contextual memory for rich educational interactions.";
+                }
+                if (text.includes("switch") || text.includes("mode")) {
+                    return "✨ Gemini mode activated (study hint): Ask for deep reasoning examples, step-by-step solutions, or compare subjects with rich insight.";
+                }
+                return "🤖 Gemini: Smart assistant for math, science, and coding with clear explanations, step-by-step reasoning, and concise examples.";
+            }
+
+            if (text.includes("gemini features")) {
+                return "🔧 Gemini features include multimodal reasoning, long-context understanding, composition, and structured study guidance for learners.";
+            }
+
+            if (text.includes("history")) {
+                if (text.includes("world war") || text.includes("wwii")) return "⚔️ World War II (1939-1945): Axis vs Allies. Key events: Holocaust, atomic bombs, formation of UN. 70+ million deaths.";
+                if (text.includes("ancient") || text.includes("rome") || text.includes("greece")) return "🏛️ Ancient Civilizations: Greece (democracy, philosophy), Rome (law, engineering), Egypt (pyramids, hieroglyphs).";
+                if (text.includes("industrial")) return "🏭 Industrial Revolution: 18th-19th century. Transition to machine manufacturing. Started in Britain, spread globally.";
+                return "📚 History: Ancient, Medieval, Modern, Contemporary. Study causes, effects, and lessons from past events.";
+            }
+
+            // General questions and help
+            if (text.includes("help") || text.includes("how to") || text.includes("study")) {
+                return "📚 Study Tips: 1) Active recall testing, 2) Spaced repetition, 3) Teach others, 4) Use mnemonic devices, 5) Take breaks (Pomodoro technique). What subject needs help?";
+            }
+
+            if (text.includes("homework") || text.includes("assignment")) {
+                return "📝 Homework Help: 1) Read instructions carefully, 2) Break into smaller tasks, 3) Research thoroughly, 4) Show your work, 5) Check answers. Which subject?";
+            }
+
+            if (text.includes("exam") || text.includes("test")) {
+                return "📋 Exam Prep: 1) Review notes regularly, 2) Practice past papers, 3) Focus on weak areas, 4) Get enough sleep, 5) Stay calm during test.";
+            }
+
+            if (text.includes("motivation") || text.includes("tired")) {
+                return "💪 Stay Motivated: 1) Set small goals, 2) Reward yourself, 3) Study with friends, 4) Remember your 'why', 5) Take care of your health.";
+            }
+
+            // Coding examples
+            if (text.includes("example") || text.includes("code example")) {
+                if (text.includes("python")) return "🐍 Python Example:\n```python\ndef greet(name):\n    return f'Hello, {name}!'\n\nprint(greet('World'))\n```";
+                if (text.includes("javascript")) return "🌐 JavaScript Example:\n```javascript\nfunction greet(name) {\n    return `Hello, ${name}!`;\n}\n\nconsole.log(greet('World'));\n```";
+                if (text.includes("html")) return "🌐 HTML Example:\n```html\n<!DOCTYPE html>\n<html>\n<body>\n    <h1>Hello World!</h1>\n</body>\n</html>\n```";
+            }
+
+            // Basic HTML structure
+            if (text.includes("html structure") || text.includes("basic html")) {
+                return "Here's a basic HTML structure:\n\n```html\n<!DOCTYPE html>\n<html>\n<head>\n    <title>My Page</title>\n</head>\n<body>\n    <h1>Hello World!</h1>\n</body>\n</html>\n```";
+            }
+
+            // Default responses
+            if (text.includes("hello") || text.includes("hi") || text.includes("hey")) {
+                return "👋 Hello! I'm your educational AI assistant. I can help with Math, Physics, Chemistry, Biology, Programming, and History. What would you like to learn today?";
+            }
+
+            if (text.includes("thank") || text.includes("thanks")) {
+                return "🙏 You're welcome! Keep learning and asking questions. I'm here to help with your studies!";
+            }
+
+            if (text.includes("bye") || text.includes("goodbye")) {
+                return "👋 Goodbye! Remember: learning is a journey, not a destination. Keep studying!";
+            }
+
+            // Fallback for unrecognized questions
+            return "🤔 I can help with Math, Physics, Chemistry, Biology, Programming, History, and study tips! Try asking about a specific topic or subject. For example: 'Explain photosynthesis' or 'Python basics'.";
+        }
+
+        // Clear chat
+        function clearChat() {
+            history = [];
+            localStorage.removeItem("chat");
+            chatBox.innerHTML = "";
+            // Force garbage collection hint
+            if (window.gc) window.gc();
+        }
+
+        // Timer FIXED
+        let total = 1500;
+        let interval;
+
+        function startTimer() {
+            clearInterval(interval);
+            interval = setInterval(() => {
+                total--;
+                updateTime();
+                if (total <= 0) clearInterval(interval);
+            }, 1000);
+        }
+
+        function resetTimer() {
+            clearInterval(interval);
+            total = 1500;
+            updateTime();
+        }
+
+        function updateTime() {
+            let m = Math.floor(total / 60);
+            let s = total % 60;
+            document.getElementById("time").innerText =
+                m + ":" + (s < 10 ? "0" : "") + s;
+        }
+
+        // Notes
+        function saveNotes() {
+            localStorage.setItem("notes", document.getElementById("notes").value);
+            alert("Saved!");
+        }
+
+        function downloadNotes() {
+            let blob = new Blob([document.getElementById("notes").value]);
+            let a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = "notes.txt";
+            a.click();
+        }
+
+        // Theme
+        function toggleTheme() {
+            const body = document.body;
+            const themeBtn = document.querySelector('button[onclick="toggleTheme()"]');
+
+            // Cycle through themes: default -> light -> apple -> default
+            if (body.classList.contains('apple')) {
+                body.classList.remove('apple');
+                if (themeBtn) themeBtn.textContent = '🌙 Dark Mode';
+            } else if (body.classList.contains('light')) {
+                body.classList.remove('light');
+                body.classList.add('apple');
+                if (themeBtn) themeBtn.textContent = '🍎 Apple Theme';
+            } else {
+                body.classList.add('light');
+                if (themeBtn) themeBtn.textContent = '☀️ Light Mode';
+            }
+
+            // Add a smooth transition effect
+            body.style.transition = "background 0.5s ease, color 0.5s ease";
+            setTimeout(() => {
+                body.style.transition = "";
+            }, 500);
+        }
+
+        // Load notes
+        document.getElementById("notes").value =
+            localStorage.getItem("notes") || "";
+
+        // Add page load animation
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.classList.add('loaded');
+        });
+    </script>
+
+</body>
+
+</html>
